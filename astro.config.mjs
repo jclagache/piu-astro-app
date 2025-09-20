@@ -12,8 +12,6 @@ export default defineConfig({
       enabled: true,
     },
     imageService: 'compile', // Optimize images with sharp during build time
-    // Disable KV sessions temporarily to avoid binding errors
-    sessionKVBindingName: undefined,
   }),
   vite: {
     plugins: [tailwindcss()]
