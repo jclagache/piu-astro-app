@@ -1,0 +1,30 @@
+---
+import ThemeToggle from './react/theme-toggle.tsx';
+import { FaRegCopyright } from "react-icons/fa";
+---
+
+<!-- Footer -->
+<footer class="border-t border-border bg-card">
+  <div class="container mx-auto px-4 py-8">
+    <div class="relative">
+      <!-- Centered text -->
+      <div class="text-center">
+        <p class="text-muted-foreground">
+          © 2025 PIU
+        </p>
+        <p class="text-muted-foreground text-xs">
+          Built with <span class="text-primary">Astro</span>, <span class="text-secondary">Tailwind CSS</span>, and <span class="text-accent">Shadcn UI</span>
+        </p>
+        <p class="text-muted-foreground text-xs">
+          Powered by <span class="text-primary">Reown AppKit</span> for secure wallet connections
+        </p>
+      </div>
+      
+      <!-- Theme Toggle positioned absolutely to the right -->
+      <div class="absolute top-0 right-0 flex items-center gap-2">
+        <span class="text-sm text-muted-foreground">Theme:</span>
+        <ThemeToggle client:load />
+      </div>
+    </div>
+  </div>
+</footer>

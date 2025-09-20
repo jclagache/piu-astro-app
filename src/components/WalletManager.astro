@@ -1,0 +1,66 @@
+---
+// Ce composant peut être inclus dans n'importe quelle page Astro
+// Il initialise le contexte wallet de manière globale
+---
+
+<script>
+  // Initialise le contexte wallet une seule fois par page
+  class WalletManager {
+    private static instance: WalletManager;
+    private appKit: any = null;
+    private ready: boolean = false;
+    private listeners: Array<(appKit: any) => void> = [];
+
+    static getInstance(): WalletManager {
+      if (!WalletManager.instance) {
+        WalletManager.instance = new WalletManager();
+      }
+      return WalletManager.instance;
+    }
+
+    async initialize(): Promise<void> {
+      if (this.ready) return;
+
+      try {
+        
+        // Dynamic import to ensure client-side only
+        const { appKit } = await import('../lib/reown-config.ts');
+        this.appKit = appKit;
+        this.ready = true;
+        
+        
+        // Notify all waiting components
+        this.listeners.forEach(callback => callback(appKit));
+        this.listeners = [];
+        
+        // Set global reference for easy access
+        (window as any).walletManager = this;
+        
+      } catch (error) {
+        console.error('WalletManager: Failed to initialize', error);
+      }
+    }
+
+    onReady(callback: (appKit: any) => void): void {
+      if (this.ready && this.appKit) {
+        callback(this.appKit);
+      } else {
+        this.listeners.push(callback);
+      }
+    }
+
+    getAppKit(): any {
+      return this.appKit;
+    }
+
+    isReady(): boolean {
+      return this.ready;
+    }
+  }
+
+  // Auto-initialize when this script loads
+  if (typeof window !== 'undefined') {
+    const manager = WalletManager.getInstance();
+    manager.initialize();
+  }
+</script>

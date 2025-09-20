@@ -1,16 +1,75 @@
 ---
 import '../styles/global.css';
-const { content } = Astro.props;
+import WalletManager from '../components/WalletManager.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const { title } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<title>{content.title}</title>
+		
+		<!-- Favicons -->
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
+		
+		<!-- Meta tags -->
+		<meta name="description" content="Decentralized application built around the $PIU token deployed on the Solana blockchain. Connect your wallet, check your balance, and access exclusive features." />
+		<meta name="theme-color" content="#f3be1a" />
+		
+		<title>{title || 'PIU dApp'}</title>
+		
+		<!-- Script to prevent flash of unstyled content -->
+		<script is:inline>
+			// Apply theme before hydration
+			(function() {
+				const savedTheme = localStorage.getItem('theme');
+				const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				const theme = savedTheme || systemTheme;
+				
+				if (theme === 'dark') {
+					document.documentElement.classList.add('dark');
+					document.documentElement.classList.remove('light');
+				} else {
+					document.documentElement.classList.add('light');
+					document.documentElement.classList.remove('dark');
+				}
+			})();
+		</script>
 	</head>
-	<body>
-		<slot />
+	<body class="min-h-screen bg-background text-foreground flex flex-col">
+		<!-- WalletManager available globally -->
+		<WalletManager />
+		
+		<!-- Header available on all pages -->
+		<Header />
+		
+		<!-- Main content that takes available space -->
+		<main class="flex-1">
+			<slot />
+		</main>
+		
+		<!-- Footer available on all pages -->
+		<Footer />
 	</body>
 </html>

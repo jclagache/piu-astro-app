@@ -1,0 +1,62 @@
+---
+import WalletConnectButton from "./react/wallet-connect-button.tsx";
+import { Button } from "./ui/button";
+import logoSvg from "../images/logo.svg";
+
+// Check if we're in development mode
+const isDev = import.meta.env.DEV;
+---
+
+<!-- Header -->
+<nav class="border-b border-border bg-card">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <div class="flex">
+        <a
+          href="/"
+          class="flex items-center space-x-2 text-2xl font-bold text-primary"
+        >
+          <img src={logoSvg.src} alt="PIU Logo"/>
+          <span>dApp</span>
+        </a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <!-- Production pages (always visible) -->
+        <Button variant="link"><a href="/">Home</a></Button>
+        <Button variant="link"><a href="/wallet">Wallet</a></Button>
+        <Button variant="link"
+          ><a href="/exclusive-holders-content">Exclusive Content</a></Button
+        >
+        <Button variant="link"
+          ><a href="/content-generator">Content Generator</a></Button
+        >
+
+        <!-- Development pages (visible only in dev) -->
+        {
+          isDev && (
+            <>
+              <div class="h-4 w-px bg-border mx-2" />
+              <span class="text-xs text-muted-foreground font-medium">
+                DEV:
+              </span>
+              <Button variant="link" size="sm">
+                <a href="/dev/colors">Colors</a>
+              </Button>
+              <Button variant="link" size="sm">
+                <a href="/dev/demo">Demo</a>
+              </Button>
+              <Button variant="link" size="sm">
+                <a href="/dev/shadcn">Shadcn</a>
+              </Button>
+              <Button variant="link" size="sm">
+                <a href="/dev/markdown-page">Markdown</a>
+              </Button>
+            </>
+          )
+        }
+
+        <WalletConnectButton client:load />
+      </div>
+    </div>
+  </div>
+</nav>

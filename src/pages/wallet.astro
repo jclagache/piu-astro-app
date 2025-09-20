@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/main.astro';
+import WalletConnectButton from '../components/react/wallet-connect-button.tsx';
+import WalletDemo from '../components/react/wallet-demo.tsx';
+---
+
+<Layout title="Wallet Connection - PIU dApp">
+
+  <!-- Main content -->
+  <main class="container mx-auto py-12 px-4">
+    <div class="mb-12 text-center">
+      <h1 class="text-5xl font-bold mb-6 text-primary">Wallet Connection</h1>
+      <p class="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+        Connect your Solana wallet to interact with the PIU ecosystem. 
+        Supports Phantom, Solflare, and other popular Solana wallets.
+      </p>
+    </div>
+
+    <WalletDemo client:load />
+
+  </main>
+</Layout>

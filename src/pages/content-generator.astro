@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/main.astro";
+import baseSvg from "../images/base.svg";
+import AvatarCustomizer from "../components/react/avatar-customizer.tsx";
+---
+
+<Layout title="Content Generator - PIU dApp">
+    <div class="container mx-auto py-12 px-4">
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-bold mb-4 text-primary">
+                Content Generator
+            </h1>
+            <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Generate personalized profile pictures
+            </p>
+        </div>
+
+        <!-- Avatar Customizer -->
+        <div class="max-w-4xl mx-auto">
+            <AvatarCustomizer 
+                baseImageSrc={baseSvg.src}
+                client:only="react" 
+            />
+        </div>
+    </div>
+</Layout>

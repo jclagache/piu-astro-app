@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/main.astro';
+import AccessCheck from '../components/react/access-check.tsx';
+import { AdvancedAnalytics } from '../components/react/advanced-analytics.tsx';
+import { Button } from '../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+---
+
+<Layout title="Exclusive Content for $PIU Token Holders - PIU dApp">
+  <div class="container mx-auto py-12 px-4">
+    <div class="mb-8 text-center">
+      <h1 class="text-4xl font-bold mb-4 text-primary">Exclusive content for $PIU token holders</h1>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+        Access exclusive content and features reserved for $PIU token holders
+      </p>
+    </div>
+
+    <!-- Access verification -->
+    <div id="access-check" class="flex justify-center">
+      <AccessCheck client:load />
+    </div>
+
+    <!-- Protected content for PIU token holders -->
+    <div id="protected-content" class="hidden mt-12">
+      <div class="grid lg:grid-cols-2 gap-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-primary">🎨 Exclusive NFT Preview</CardTitle>
+            <CardDescription>
+              Get early access to upcoming PIU NFT collections
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg p-8 text-center">
+              <p class="text-lg font-medium mb-4">Coming Soon</p>
+              <p class="text-muted-foreground">
+                Exclusive NFT drops and early access for PIU token holders
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <AdvancedAnalytics client:load />
+
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle className="text-accent">🔥 Exclusive Features</CardTitle>
+            <CardDescription>
+              Premium features available only to PIU token holders (Coming Soon)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="text-center p-4 border border-border rounded-lg">
+                <div class="text-2xl mb-2">🚀</div>
+                <h3 class="font-semibold mb-2">Priority Access</h3>
+                <p class="text-sm text-muted-foreground">
+                  Get priority access to new features and updates
+                </p>
+              </div>
+              <div class="text-center p-4 border border-border rounded-lg">
+                <div class="text-2xl mb-2">💬</div>
+                <h3 class="font-semibold mb-2">VIP Community</h3>
+                <p class="text-sm text-muted-foreground">
+                  Join exclusive channels for holders
+                </p>
+              </div>
+              <div class="text-center p-4 border border-border rounded-lg">
+                <div class="text-2xl mb-2">🎁</div>
+                <h3 class="font-semibold mb-2">Airdrops</h3>
+                <p class="text-sm text-muted-foreground">
+                  Receive exclusive airdrops and rewards
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script to manage protected content visibility -->
+  <script>
+    // Function to show/hide protected content based on access
+    function updateContentVisibility(hasAccess: boolean) {
+      const protectedContent = document.getElementById('protected-content');
+      if (protectedContent) {
+        if (hasAccess) {
+          protectedContent.classList.remove('hidden');
+        } else {
+          protectedContent.classList.add('hidden');
+        }
+      }
+    }
+
+    // Listen for access changes from the AccessCheck component
+    window.addEventListener('accessChange', (event) => {
+      const customEvent = event as CustomEvent;
+      updateContentVisibility(customEvent.detail.hasAccess);
+    });
+
+    // Initialize content visibility
+    document.addEventListener('DOMContentLoaded', () => {
+      // Default to hidden until access is verified
+      updateContentVisibility(false);
+    });
+  </script>
+</Layout>

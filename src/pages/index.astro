@@ -1,25 +1,240 @@
 ---
-import '../styles/global.css';
-// Component Imports
-import Button from '../components/Button.astro';
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
+import Layout from '../layouts/main.astro';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
+import { TokenPrices } from '../components/react/token-prices.tsx';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro + TailwindCSS</title>
-	</head>
+<Layout title="PIU dApp - Decentralized Application on Solana">
+    <div class="container mx-auto py-12 px-4">
+      <div class="mb-12 text-center">
+        <h1 class="text-5xl font-bold mb-6 text-primary">PIU dApp</h1>
+        <p class="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+          Decentralized application built around the $PIU token deployed on the Solana blockchain. 
+          Connect your wallet, check your balance, and access exclusive features reserved for token holders.
+        </p>
+        <Card className="mb-6 inline-block">
+          <CardContent className="p-4">
+            <p class="text-sm text-muted-foreground mb-2">$PIU Token Contract on Solana</p>
+            <Badge variant="outline" className="font-mono text-xs">
+              5eafqp6ic7WpxUsKJLhnLxthUcEYatjhXPNLBRZCpump
+            </Badge>
+          </CardContent>
+        </Card>
+        <div class="flex flex-wrap justify-center gap-4">
+          <Button asChild>
+            <a href="/wallet">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              Connect Wallet
+            </a>
+          </Button>
+          <Button variant="secondary" asChild>
+            <a href="/exclusive-holders-content">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Exclusive Content
+            </a>
+          </Button>
+          <Button variant="outline" asChild>
+            <a href="/content-generator">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3M7 4H5a1 1 0 00-1 1v3m0 0v8a1 1 0 001 1h3M7 4v10a1 1 0 001 1h8a1 1 0 001-1V4M7 4h10" />
+              </svg>
+              Content Generator
+            </a>
+          </Button>
+        </div>
+      </div>
 
-	<body>
-		<div class="grid place-items-center h-screen content-center">
-			<Button>Tailwind Button in Astro!</Button>
-			<a href="/markdown-page" class="p-4 underline">Markdown is also supported...</a>
-		</div>
-	</body>
-</html>
+      <!-- Features Cards -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <Card>
+          <CardHeader>
+            <div class="w-12 h-12 bg-primary rounded-lg mb-4 flex items-center justify-center">
+              <svg class="w-6 h-6 text-primary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <CardTitle>Wallet Connection</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>
+              Easily connect your Solana wallet (Phantom, Solflare) to interact with the dApp and verify your $PIU balance.
+            </CardDescription>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div class="w-12 h-12 bg-secondary rounded-lg mb-4 flex items-center justify-center">
+              <svg class="w-6 h-6 text-secondary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <CardTitle>Exclusive Content</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>
+              Access premium content, preview NFTs, and exclusive features reserved for $PIU token holders.
+            </CardDescription>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div class="w-12 h-12 bg-accent rounded-lg mb-4 flex items-center justify-center">
+              <svg class="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <CardTitle>Content Generator</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>
+              Create and customize unique content with our integrated generator, available to all users.
+            </CardDescription>
+          </CardContent>
+        </Card>
+      </div>
+
+      <!-- Real-time Token Prices -->
+      <div class="mb-12">
+        <TokenPrices client:load />
+      </div>
+
+      <!-- Token Information -->
+      <div class="mb-12 text-center">
+        <h2 class="text-3xl font-bold mb-4 text-foreground">About the $PIU Token</h2>
+        <div class="max-w-4xl mx-auto">
+          <p class="text-lg text-muted-foreground mb-6">
+            The $PIU token is deployed on the Solana blockchain, offering fast transactions and reduced fees. 
+            This dApp allows holders to interact with the PIU ecosystem in a decentralized and secure manner.
+          </p>
+          <div class="grid md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-primary">Solana Blockchain</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul class="text-left text-muted-foreground space-y-2">
+                  <li>• Ultra-fast transactions (&lt; 1 second)</li>
+                  <li>• Very low transaction fees</li>
+                  <li>• Growing DeFi ecosystem</li>
+                  <li>• Compatible with popular wallets</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-secondary">dApp Features</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul class="text-left text-muted-foreground space-y-2">
+                  <li>• Automatic balance verification</li>
+                  <li>• Token-based conditional access</li>
+                  <li>• Modern and responsive user interface</li>
+                  <li>• Complete Web3 ecosystem integration</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <Card className="mb-12 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10">
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl font-bold">Get Started Now</CardTitle>
+          <CardDescription className="text-lg">
+            Connect your Solana wallet and discover the PIU universe
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center">
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button size="lg" asChild>
+              <a href="/wallet">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                Connect My Wallet
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <a href="/content-generator">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Explore Content Generator
+              </a>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Technical Features -->
+      <div class="mt-16">
+        <h2 class="text-3xl font-bold text-center mb-12 text-foreground">Technical Features</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="text-center">
+            <CardHeader>
+              <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <CardTitle className="text-lg">Web3 Security</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>Secure wallet connections and cryptographic transactions</CardDescription>
+            </CardContent>
+          </Card>
+          
+          <Card className="text-center">
+            <CardHeader>
+              <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <CardTitle className="text-lg">Performance</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>Fast and responsive interface optimized for Web3</CardDescription>
+            </CardContent>
+          </Card>
+          
+          <Card className="text-center">
+            <CardHeader>
+              <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <CardTitle className="text-lg">Multi-device</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>Mobile and desktop compatible with adaptive interface</CardDescription>
+            </CardContent>
+          </Card>
+          
+          <Card className="text-center">
+            <CardHeader>
+              <div class="w-16 h-16 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </div>
+              <CardTitle className="text-lg">Dark Mode</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>Native dark theme support for better experience</CardDescription>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+</Layout>
