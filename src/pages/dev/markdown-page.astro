@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/main.astro';
+---
+
+<Layout title="Markdown Test - Development Only">
+  <article class="container mx-auto py-12 px-4 max-w-4xl">
+    <div class="mb-8 text-center">
+      <h1 class="text-4xl font-bold mb-4 text-primary">Markdown Test Page</h1>
+      <p class="text-lg text-muted-foreground">
+        Development page - Testing markdown rendering and typography
+      </p>
+      <div class="mt-4 p-4 bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-lg">
+        <p class="text-sm text-yellow-800 dark:text-yellow-200">
+          ⚠️ This page is available only in development mode
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+      <h2>About Markdown</h2>
+      <p>
+        This page demonstrates how Markdown content is rendered with our custom PIU theme.
+        It includes various elements to test typography and styling.
+      </p>
+      
+      <h3>Features</h3>
+      <ul>
+        <li>Clean typography with optimal readability</li>
+        <li>Consistent spacing and hierarchy</li>
+        <li>Dark mode support</li>
+        <li>Mobile-responsive design</li>
+      </ul>
+
+      <h3>Code Example</h3>
+      <pre><code>const message = 'Hello PIU dApp!';
+console.log(message);</code></pre>
+
+      <blockquote>
+        <p>This is a blockquote example to showcase the quote styling in our design system.</p>
+      </blockquote>
+
+      <h3>Links and Emphasis</h3>
+      <p>
+        You can use <strong>bold text</strong>, <em>italic text</em>, and 
+        <a href="#" class="text-primary hover:underline">links</a> throughout your content.
+      </p>
+    </div>
+  </article>
+</Layout>
