@@ -22,6 +22,7 @@ export function usePiuBalance(address: string | undefined) {
       setError(null)
 
       try {
+        console.log('🔍 Fetching PIU balance for address:', address)
 
         // Validate address format
         if (!isValidSolanaAddress(address)) {
@@ -30,10 +31,14 @@ export function usePiuBalance(address: string | undefined) {
 
         // Create connection to Solana with fallback
         const connection = await getSolanaConnection()
+        console.log('✅ Solana connection established')
         
         // Create public keys with validation
         const walletPublicKey = new PublicKey(address!)
         const mintPublicKey = new PublicKey(PIU_TOKEN_MINT_ADDRESS)
+        
+        console.log('📝 Wallet PublicKey:', walletPublicKey.toString())
+        console.log('📝 Mint PublicKey:', mintPublicKey.toString())
         
         if (!walletPublicKey) {
           throw new Error(`Failed to create PublicKey from wallet address: ${address}`)
@@ -49,19 +54,37 @@ export function usePiuBalance(address: string | undefined) {
           walletPublicKey
         )
         
+        console.log('🔗 Associated Token Address:', associatedTokenAddress.toString())
+        
         try {
           // Get token account info
           const tokenAccount = await getAccount(connection, associatedTokenAddress)
+          console.log('📊 Token Account Info:', {
+            address: tokenAccount.address.toString(),
+            amount: tokenAccount.amount.toString(),
+            mint: tokenAccount.mint.toString(),
+            owner: tokenAccount.owner.toString()
+          })
           
-          // PIU has 6 decimals (you may need to adjust this)
-          const balance = Number(tokenAccount.amount) / Math.pow(10, 6)
+          // Get token mint info to determine decimals
+          const mintInfo = await connection.getParsedAccountInfo(mintPublicKey)
+          const decimals = mintInfo.value?.data && 'parsed' in mintInfo.value.data 
+            ? mintInfo.value.data.parsed.info.decimals 
+            : 6 // Default fallback
+          
+          console.log('🔢 Token decimals:', decimals)
+          
+          // Calculate balance with correct decimals
+          const balance = Number(tokenAccount.amount) / Math.pow(10, decimals)
+          console.log('💰 Calculated PIU Balance:', balance)
           setBalance(balance)
         } catch (tokenAccountError) {
+          console.log('❌ Token account not found or error:', tokenAccountError)
           // Token account doesn't exist, balance is 0
           setBalance(0)
         }
       } catch (err) {
-        console.error('Error fetching PIU balance:', err)
+        console.error('💥 Error fetching PIU balance:', err)
         setError('Failed to fetch PIU balance')
         setBalance(null)
       } finally {
