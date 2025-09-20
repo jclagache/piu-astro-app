@@ -1,5 +1,10 @@
 ---
 import Layout from '../../layouts/main.astro';
+
+// Redirect to home if not in development mode
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/');
+}
 ---
 
 <Layout title="Markdown Test - Development Only">
@@ -9,41 +14,83 @@ import Layout from '../../layouts/main.astro';
       <p class="text-lg text-muted-foreground">
         Development page - Testing markdown rendering and typography
       </p>
-      <div class="mt-4 p-4 bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-lg">
-        <p class="text-sm text-yellow-800 dark:text-yellow-200">
+      <div class="mt-4 p-4 bg-warning-light border border-warning rounded-lg">
+        <p class="text-sm text-warning">
           ⚠️ This page is available only in development mode
         </p>
       </div>
     </div>
 
-    <div class="prose prose-lg dark:prose-invert max-w-none">
-      <h2>About Markdown</h2>
-      <p>
-        This page demonstrates how Markdown content is rendered with our custom PIU theme.
-        It includes various elements to test typography and styling.
-      </p>
+    <!-- Markdown Content -->
+    <div class="prose prose-lg max-w-none dark:prose-invert">
+      <h2>Heading 2</h2>
+      <p>This is a paragraph with <strong>bold text</strong> and <em>italic text</em>. It demonstrates the basic typography of the PIU theme.</p>
       
-      <h3>Features</h3>
+      <h3>Heading 3</h3>
+      <p>Here's a list of features:</p>
       <ul>
-        <li>Clean typography with optimal readability</li>
-        <li>Consistent spacing and hierarchy</li>
+        <li>Custom PIU color palette</li>
         <li>Dark mode support</li>
-        <li>Mobile-responsive design</li>
+        <li>Responsive design</li>
+        <li>Modern typography</li>
       </ul>
 
-      <h3>Code Example</h3>
-      <pre><code>const message = 'Hello PIU dApp!';
-console.log(message);</code></pre>
+      <h3>Code Examples</h3>
+      <p>Here's some inline code: <code>const isDev = import.meta.env.DEV</code></p>
+      
+      <pre><code>{`// Block code example
+function useJupiterPrices() {
+  const [prices, setPrices] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  useEffect(() => {
+    fetchPrices();
+  }, []);
+  
+  return { prices, isLoading };
+}`}</code></pre>
 
+      <h3>Links and References</h3>
+      <p>Here's a link to the <a href="https://dev.jup.ag/docs/price-api/v3" target="_blank" rel="noopener noreferrer">Jupiter Price API documentation</a>.</p>
+
+      <h3>Blockquote</h3>
       <blockquote>
-        <p>This is a blockquote example to showcase the quote styling in our design system.</p>
+        <p>"The best way to predict the future is to create it."</p>
+        <cite>— Peter Drucker</cite>
       </blockquote>
 
-      <h3>Links and Emphasis</h3>
-      <p>
-        You can use <strong>bold text</strong>, <em>italic text</em>, and 
-        <a href="#" class="text-primary hover:underline">links</a> throughout your content.
-      </p>
+      <h3>Table Example</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Price</th>
+            <th>Change 24h</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SOL</td>
+            <td>$237.52</td>
+            <td>-2.42%</td>
+          </tr>
+          <tr>
+            <td>PIU</td>
+            <td>$0.000022</td>
+            <td>-2.91%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Horizontal Rule</h3>
+      <hr />
+
+      <h3>Images</h3>
+      <p>Here's how images would be rendered in markdown:</p>
+      <p><em>Note: This is just a placeholder for image rendering</em></p>
+
+      <h2>Conclusion</h2>
+      <p>This markdown test page demonstrates how content would be rendered with the PIU theme. The typography should be clean, readable, and consistent with the overall design system.</p>
     </div>
   </article>
 </Layout>

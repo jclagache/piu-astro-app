@@ -1,5 +1,10 @@
 ---
 import Layout from '../../layouts/main.astro';
+
+// Redirect to home if not in development mode
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/');
+}
 ---
 
 <Layout title="PIU Color Scales - Development Only">
@@ -9,8 +14,8 @@ import Layout from '../../layouts/main.astro';
       <p class="text-lg text-muted-foreground">
         Development page - Explore the PIU color palette and design system
       </p>
-      <div class="mt-4 p-4 bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-lg">
-        <p class="text-sm text-yellow-800 dark:text-yellow-200">
+      <div class="mt-4 p-4 bg-warning-light border border-warning rounded-lg">
+        <p class="text-sm text-warning">
           ⚠️ This page is available only in development mode
         </p>
       </div>

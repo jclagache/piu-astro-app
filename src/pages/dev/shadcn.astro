@@ -4,203 +4,202 @@ import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Skeleton } from '../../components/ui/skeleton';
+
+// Redirect to home if not in development mode
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/');
+}
 ---
 
 <Layout title="Shadcn Components - PIU Theme">
   <main class="container mx-auto py-12 px-4">
     <div class="mb-8 text-center">
-      <h1 class="text-4xl font-bold mb-4 text-primary">Shadcn Components with PIU Theme</h1>
+      <h1 class="text-4xl font-bold mb-4 text-primary">Shadcn Components</h1>
       <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-        Testing all Shadcn UI components with the complete PIU color palette
+        Testing Shadcn UI components with the custom PIU theme
       </p>
-      <!-- Test des variables CSS -->
-      <div class="mt-4 flex gap-4 justify-center">
-        <div class="bg-primary text-primary-foreground px-4 py-2 rounded">Primary Test</div>
-        <div class="bg-secondary text-secondary-foreground px-4 py-2 rounded">Secondary Test</div>
-        <div class="bg-accent text-accent-foreground px-4 py-2 rounded">Accent Test</div>
+      <div class="mt-4 p-4 bg-warning-light border border-warning rounded-lg">
+        <p class="text-sm text-warning">
+          ⚠️ This page is available only in development mode
+        </p>
       </div>
     </div>
 
-    <div class="space-y-8">
-      <!-- PIU Color Scale Demo -->
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-primary">PIU Color Scales Test</CardTitle>
-          <CardDescription>
-            Testing all the PIU color scales with Shadcn components
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <!-- Primary Scale -->
-          <div>
-            <h3 class="text-lg font-semibold mb-3 text-foreground">Primary Scale (Yellow)</h3>
-            <div class="flex flex-wrap gap-2">
-              <Badge variant="outline" className="bg-primary-100 text-primary-900 hover:bg-primary-200">100</Badge>
-              <Badge variant="outline" className="bg-primary-300 text-primary-900 hover:bg-primary-400">300</Badge>
-              <Badge variant="outline" className="bg-primary-500 text-primary-50 hover:bg-primary-600">500</Badge>
-              <Badge variant="outline" className="bg-primary-700 text-primary-50 hover:bg-primary-800">700</Badge>
-              <Badge variant="outline" className="bg-primary-900 text-primary-50 hover:bg-primary-950">900</Badge>
-            </div>
-          </div>
+    <!-- Button Variants -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-secondary">Button Variants</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button>Default</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="destructive">Destructive</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="link">Link</Button>
+      </div>
+    </section>
 
-          <!-- Secondary Scale -->
-          <div>
-            <h3 class="text-lg font-semibold mb-3 text-foreground">Secondary Scale (Blue)</h3>
-            <div class="flex flex-wrap gap-2">
-              <Badge variant="outline" className="bg-secondary-100 text-secondary-900 hover:bg-secondary-200">100</Badge>
-              <Badge variant="outline" className="bg-secondary-300 text-secondary-50 hover:bg-secondary-400">300</Badge>
-              <Badge variant="outline" className="bg-secondary-500 text-secondary-50 hover:bg-secondary-600">500</Badge>
-              <Badge variant="outline" className="bg-secondary-700 text-secondary-50 hover:bg-secondary-800">700</Badge>
-              <Badge variant="outline" className="bg-secondary-900 text-secondary-50 hover:bg-secondary-950">900</Badge>
-            </div>
-          </div>
+    <!-- Button Sizes -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-accent">Button Sizes</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <Button size="sm">Small</Button>
+        <Button size="default">Default</Button>
+        <Button size="lg">Large</Button>
+      </div>
+    </section>
 
-          <!-- Accent Scale -->
-          <div>
-            <h3 class="text-lg font-semibold mb-3 text-foreground">Accent Scale (Pink)</h3>
-            <div class="flex flex-wrap gap-2">
-              <Badge variant="outline" className="bg-accent-100 text-accent-900 hover:bg-accent-200">100</Badge>
-              <Badge variant="outline" className="bg-accent-300 text-accent-900 hover:bg-accent-400">300</Badge>
-              <Badge variant="outline" className="bg-accent-500 text-accent-50 hover:bg-accent-600">500</Badge>
-              <Badge variant="outline" className="bg-accent-700 text-accent-50 hover:bg-accent-800">700</Badge>
-              <Badge variant="outline" className="bg-accent-900 text-accent-50 hover:bg-accent-950">900</Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <!-- Badge Variants -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-primary">Badge Variants</h2>
+      <div class="flex flex-wrap gap-4">
+        <Badge>Default</Badge>
+        <Badge variant="secondary">Secondary</Badge>
+        <Badge variant="destructive">Destructive</Badge>
+        <Badge variant="outline">Outline</Badge>
+      </div>
+    </section>
 
-      <!-- Buttons with PIU Theme -->
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-secondary">Button Variants</CardTitle>
-          <CardDescription>
-            All button variants using PIU colors
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="space-y-2">
-              <p class="text-sm text-muted-foreground">Default (Primary)</p>
-              <Button className="w-full bg-primary text-primary-foreground">Primary Button</Button>
-            </div>
-            <div class="space-y-2">
-              <p class="text-sm text-muted-foreground">Secondary</p>
-              <Button variant="secondary" className="w-full bg-secondary text-secondary-foreground">Secondary</Button>
-            </div>
-            <div class="space-y-2">
-              <p class="text-sm text-muted-foreground">Outline</p>
-              <Button variant="outline" className="w-full">Outline</Button>
-            </div>
-            <div class="space-y-2">
-              <p class="text-sm text-muted-foreground">Ghost</p>
-              <Button variant="ghost" className="w-full">Ghost</Button>
-            </div>
-            <div class="space-y-2">
-              <p class="text-sm text-muted-foreground">Destructive</p>
-              <Button variant="destructive" className="w-full">Destructive</Button>
-            </div>
-            <div class="space-y-2">
-              <p class="text-sm text-muted-foreground">Link</p>
-              <Button variant="link" className="w-full">Link</Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <!-- Card Components -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-secondary">Card Components</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card description goes here</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              This is the card content area where you can place any content.
+            </p>
+          </CardContent>
+        </Card>
 
-      <!-- Custom PIU Colored Buttons -->
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-accent">Custom PIU Buttons</CardTitle>
-          <CardDescription>
-            Buttons using specific PIU color scales
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div class="flex flex-wrap gap-4">
-            <Button className="bg-primary-500 hover:bg-primary-600 text-primary-950">
-              PIU Yellow
-            </Button>
-            <Button className="bg-secondary-500 hover:bg-secondary-600 text-secondary-50">
-              PIU Blue
-            </Button>
-            <Button className="bg-accent-500 hover:bg-accent-600 text-accent-50">
-              PIU Pink
-            </Button>
-            <Button className="bg-primary-300 hover:bg-primary-400 text-primary-900">
-              Light Yellow
-            </Button>
-            <Button className="bg-secondary-200 hover:bg-secondary-300 text-secondary-900">
-              Light Blue
-            </Button>
-            <Button className="bg-accent-200 hover:bg-accent-300 text-accent-900">
-              Light Pink
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-primary">Primary Card</CardTitle>
+            <CardDescription>Card with primary styling</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              This card demonstrates the primary color theme.
+            </p>
+          </CardContent>
+        </Card>
 
-      <!-- Skeleton Loading Demo -->
-      <Card>
-        <CardHeader>
-          <CardTitle>Loading Skeletons</CardTitle>
-          <CardDescription>
-            Skeleton components with PIU theme
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div class="space-y-4">
-            <div class="flex items-center space-x-4">
-              <Skeleton className="h-12 w-12 rounded-full" />
-              <div class="space-y-2">
-                <Skeleton className="h-4 w-[250px]" />
-                <Skeleton className="h-4 w-[200px]" />
-              </div>
-            </div>
-            <div class="space-y-2">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-3/4" />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-accent">Accent Card</CardTitle>
+            <CardDescription>Card with accent styling</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p class="text-sm text-muted-foreground">
+              This card demonstrates the accent color theme.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
 
-      <!-- Card Variants -->
+    <!-- Skeleton Components -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-accent">Skeleton Components</h2>
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <Skeleton className="h-4 w-[250px]" />
+          <Skeleton className="h-4 w-[200px]" />
+          <Skeleton className="h-4 w-[150px]" />
+        </div>
+        <div class="flex items-center space-x-4">
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <div class="space-y-2">
+            <Skeleton className="h-4 w-[200px]" />
+            <Skeleton className="h-4 w-[100px]" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Elements -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-primary">Interactive Elements</h2>
       <div class="grid md:grid-cols-2 gap-6">
-        <Card className="border-primary-300">
-          <CardHeader className="bg-primary-50 rounded-t-lg">
-            <CardTitle className="text-primary-700">Primary Card</CardTitle>
-            <CardDescription className="text-primary-600">
-              Card with primary color theme
-            </CardDescription>
+        <Card>
+          <CardHeader>
+            <CardTitle>Form Elements</CardTitle>
+            <CardDescription>Testing form components</CardDescription>
           </CardHeader>
-          <CardContent className="pt-6">
-            <p class="text-foreground mb-4">
-              This card uses primary colors from the PIU palette.
-            </p>
-            <Button className="bg-primary-500 hover:bg-primary-600 h-9 px-3">
-              Primary Action
-            </Button>
+          <CardContent className="space-y-4">
+            <div>
+              <label class="text-sm font-medium">Input Field</label>
+              <input 
+                type="text" 
+                placeholder="Enter text..." 
+                class="w-full mt-1 px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium">Textarea</label>
+              <textarea 
+                placeholder="Enter message..." 
+                rows="3"
+                class="w-full mt-1 px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              ></textarea>
+            </div>
+            <Button className="w-full">Submit</Button>
           </CardContent>
         </Card>
 
-        <Card className="border-secondary-300">
-          <CardHeader className="bg-secondary-50 rounded-t-lg">
-            <CardTitle className="text-secondary-700">Secondary Card</CardTitle>
-            <CardDescription className="text-secondary-600">
-              Card with secondary color theme
-            </CardDescription>
+        <Card>
+          <CardHeader>
+            <CardTitle>Status Indicators</CardTitle>
+            <CardDescription>Various status badges</CardDescription>
           </CardHeader>
-          <CardContent className="pt-6">
-            <p class="text-foreground mb-4">
-              This card uses secondary colors from the PIU palette.
-            </p>
-            <Button className="bg-secondary-500 hover:bg-secondary-600 text-secondary-50 h-9 px-3">
-              Secondary Action
-            </Button>
+          <CardContent className="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm">Connection Status</span>
+              <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                Connected
+              </Badge>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm">Sync Status</span>
+              <Badge className="bg-warning-light text-warning">
+                Syncing
+              </Badge>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm">Error Status</span>
+              <Badge variant="destructive">Error</Badge>
+            </div>
           </CardContent>
         </Card>
       </div>
-    </div>
+    </section>
+
+    <!-- Color Theme Testing -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-secondary">Color Theme Testing</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-lg bg-primary text-primary-foreground">
+          <h3 class="font-semibold mb-2">Primary Theme</h3>
+          <p class="text-sm opacity-90">
+            Testing primary color with text contrast
+          </p>
+        </div>
+        <div class="p-6 rounded-lg bg-secondary text-secondary-foreground">
+          <h3 class="font-semibold mb-2">Secondary Theme</h3>
+          <p class="text-sm opacity-90">
+            Testing secondary color with text contrast
+          </p>
+        </div>
+        <div class="p-6 rounded-lg bg-accent text-accent-foreground">
+          <h3 class="font-semibold mb-2">Accent Theme</h3>
+          <p class="text-sm opacity-90">
+            Testing accent color with text contrast
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </Layout>

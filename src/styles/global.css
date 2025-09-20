@@ -128,6 +128,76 @@
   html .bg-accent-800 { background-color: #5f0222; }
   html .bg-accent-900 { background-color: #2d0110; }
   html .bg-accent-950 { background-color: #140007; }
+
+  /* Success/Positive Scale (Green) */
+  html .text-green-600 { color: #16a34a; }
+  html .bg-green-600 { background-color: #16a34a; }
+  
+  /* Error/Negative Scale (Red) */
+  html .text-red-600 { color: #dc2626; }
+  html .bg-red-600 { background-color: #dc2626; }
+
+  /* Status Colors - Using PIU Theme Colors */
+  /* Success - Using Primary (Yellow) */
+  html .text-success { color: #f0d53d; } /* primary-500 */
+  html .bg-success { background-color: #f0d53d; }
+  html .text-success-light { color: #f7e99c; } /* primary-300 */
+  html .bg-success-light { background-color: #f7e99c; }
+  
+  /* Warning - Using Accent (Pink) */
+  html .text-warning { color: #f40658; } /* accent-500 */
+  html .bg-warning { background-color: #f40658; }
+  html .text-warning-light { color: #fb6599; } /* accent-300 */
+  html .bg-warning-light { background-color: #fb6599; }
+  
+  /* Info - Using Secondary (Blue) */
+  html .text-info { color: #0b5575; } /* secondary-500 */
+  html .bg-info { background-color: #0b5575; }
+  html .text-info-light { color: #1499d2; } /* secondary-300 */
+  html .bg-info-light { background-color: #1499d2; }
+  
+  /* Error - Using Red */
+  html .text-error { color: #dc2626; }
+  html .bg-error { background-color: #dc2626; }
+  html .text-error-light { color: #fca5a5; } /* lighter red */
+  html .bg-error-light { background-color: #fca5a5; }
+
+  /* Additional Text Color Classes */
+  html .text-primary-50 { color: #ffffff; }
+  html .text-primary-100 { color: #fffefa; }
+  html .text-primary-200 { color: #fbf4cb; }
+  html .text-primary-300 { color: #f7e99c; }
+  html .text-primary-400 { color: #f4df6c; }
+  html .text-primary-500 { color: #f0d53d; }
+  html .text-primary-600 { color: #e8c812; }
+  html .text-primary-700 { color: #b99f0e; }
+  html .text-primary-800 { color: #89760b; }
+  html .text-primary-900 { color: #5a4e07; }
+  html .text-primary-950 { color: #423905; }
+
+  html .text-secondary-50 { color: #74ccf2; }
+  html .text-secondary-100 { color: #5cc3f0; }
+  html .text-secondary-200 { color: #2eb2eb; }
+  html .text-secondary-300 { color: #1499d2; }
+  html .text-secondary-400 { color: #0f77a4; }
+  html .text-secondary-500 { color: #0b5575; }
+  html .text-secondary-600 { color: #073346; }
+  html .text-secondary-700 { color: #021118; }
+  html .text-secondary-800 { color: #000000; }
+  html .text-secondary-900 { color: #000000; }
+  html .text-secondary-950 { color: #000000; }
+
+  html .text-accent-50 { color: #fee1eb; }
+  html .text-accent-100 { color: #fec8db; }
+  html .text-accent-200 { color: #fc97ba; }
+  html .text-accent-300 { color: #fb6599; }
+  html .text-accent-400 { color: #fa3378; }
+  html .text-accent-500 { color: #f40658; }
+  html .text-accent-600 { color: #c20546; }
+  html .text-accent-700 { color: #900434; }
+  html .text-accent-800 { color: #5f0222; }
+  html .text-accent-900 { color: #2d0110; }
+  html .text-accent-950 { color: #140007; }
 }
 
 @layer base {

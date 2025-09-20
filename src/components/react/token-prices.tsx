@@ -56,8 +56,8 @@ export function TokenPrices() {
           <CardDescription>Price data temporarily unavailable</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-            <p className="text-sm text-red-800 dark:text-red-200">
+          <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <p className="text-sm text-destructive-foreground">
               ⚠️ Unable to fetch price data from Jupiter API
             </p>
           </div>
@@ -80,7 +80,7 @@ export function TokenPrices() {
           <div className="p-4 bg-muted rounded-lg">
             <div className="flex items-center justify-between mb-2">
               <span className="font-medium">SOL</span>
-              <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+              <Badge variant="outline" className="bg-secondary/10 text-secondary-foreground">
                 Solana
               </Badge>
             </div>
@@ -100,7 +100,7 @@ export function TokenPrices() {
           <div className="p-4 bg-muted rounded-lg">
             <div className="flex items-center justify-between mb-2">
               <span className="font-medium">PIU</span>
-              <Badge variant="outline" className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+              <Badge variant="outline" className="bg-primary/10 text-primary-foreground">
                 PIU Token
               </Badge>
             </div>

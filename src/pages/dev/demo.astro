@@ -1,5 +1,10 @@
 ---
 import Layout from '../../layouts/main.astro';
+
+// Redirect to home if not in development mode
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/');
+}
 ---
 
 <Layout title="Interactive Demo - PIU Theme">
@@ -9,125 +14,149 @@ import Layout from '../../layouts/main.astro';
       <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
         Testing the custom PIU theme with various interactive components
       </p>
+      <div class="mt-4 p-4 bg-warning-light border border-warning rounded-lg">
+        <p class="text-sm text-warning">
+          ⚠️ This page is available only in development mode
+        </p>
+      </div>
     </div>
 
-    <div class="space-y-8">
-      <!-- Color Palette Demo -->
-      <div class="bg-card text-card-foreground rounded-lg border">
-        <div class="p-6 pb-0">
-          <h3 class="text-2xl font-semibold leading-none tracking-tight">Color Palette</h3>
-          <p class="text-sm text-muted-foreground mt-1.5">
-            Testing the custom theme colors
-          </p>
-        </div>
-        <div class="p-6 pt-0">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="space-y-2">
-              <div class="h-16 bg-primary rounded-lg flex items-center justify-center">
-                <span class="text-primary-foreground font-semibold">Primary</span>
-              </div>
-            </div>
-            <div class="space-y-2">
-              <div class="h-16 bg-secondary rounded-lg flex items-center justify-center">
-                <span class="text-secondary-foreground font-semibold">Secondary</span>
-              </div>
-            </div>
-            <div class="space-y-2">
-              <div class="h-16 bg-accent rounded-lg flex items-center justify-center">
-                <span class="text-accent-foreground font-semibold">Accent</span>
-              </div>
-            </div>
-            <div class="space-y-2">
-              <div class="h-16 bg-muted rounded-lg flex items-center justify-center">
-                <span class="text-muted-foreground font-semibold">Muted</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <!-- Interactive Components Demo -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-12">
       <!-- Buttons Demo -->
-      <div class="bg-card text-card-foreground rounded-lg border">
-        <div class="p-6 pb-0">
-          <h3 class="text-2xl font-semibold leading-none tracking-tight">Buttons</h3>
-          <p class="text-sm text-muted-foreground mt-1.5">
-            Different button variants with the theme
-          </p>
-        </div>
-        <div class="p-6 pt-0">
+      <div class="space-y-6">
+        <h2 class="text-2xl font-semibold text-primary">Buttons</h2>
+        <div class="space-y-4">
           <div class="flex flex-wrap gap-4">
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">Default</button>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2">Secondary</button>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">Outline</button>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">Ghost</button>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2">Destructive</button>
+            <button class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+              Primary Button
+            </button>
+            <button class="px-4 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors">
+              Secondary Button
+            </button>
+            <button class="px-4 py-2 bg-accent text-accent-foreground rounded-lg hover:bg-accent transition-colors">
+              Accent Button
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <button class="px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors">
+              Outline Button
+            </button>
+            <button class="px-4 py-2 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors">
+              Muted Button
+            </button>
           </div>
         </div>
       </div>
 
       <!-- Cards Demo -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-card text-card-foreground rounded-lg border">
-          <div class="p-6 pb-0">
-            <h3 class="text-2xl font-semibold leading-none tracking-tight">Card 1</h3>
-            <p class="text-sm text-muted-foreground mt-1.5">This is a sample card with the theme</p>
-          </div>
-          <div class="p-6 pt-0">
-            <p class="text-foreground">
-              This card demonstrates how the theme looks with content.
+      <div class="space-y-6">
+        <h2 class="text-2xl font-semibold text-secondary">Cards</h2>
+        <div class="space-y-4">
+          <div class="p-6 rounded-lg border border-border bg-card">
+            <h3 class="font-semibold mb-2 text-card-foreground">Card Title</h3>
+            <p class="text-sm text-muted-foreground">
+              This is a sample card with the PIU theme colors applied.
             </p>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-3 mt-4">
-              Action
-            </button>
           </div>
-        </div>
-        
-        <div class="bg-card text-card-foreground rounded-lg border">
-          <div class="p-6 pb-0">
-            <h3 class="text-2xl font-semibold leading-none tracking-tight">Card 2</h3>
-            <p class="text-sm text-muted-foreground mt-1.5">Another example card</p>
-          </div>
-          <div class="p-6 pt-0">
-            <p class="text-muted-foreground">
-              This shows muted text and different styling.
+          <div class="p-6 rounded-lg bg-primary text-primary-foreground">
+            <h3 class="font-semibold mb-2">Primary Card</h3>
+            <p class="text-sm opacity-90">
+              Card with primary background color.
             </p>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 mt-4">
-              Learn More
-            </button>
-          </div>
-        </div>
-        
-        <div class="bg-card text-card-foreground rounded-lg border">
-          <div class="p-6 pb-0">
-            <h3 class="text-2xl font-semibold leading-none tracking-tight">Card 3</h3>
-            <p class="text-sm text-muted-foreground mt-1.5">One more card example</p>
-          </div>
-          <div class="p-6 pt-0">
-            <p class="text-foreground">
-              Testing the consistency across multiple cards.
-            </p>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-3 mt-4">
-              View Details
-            </button>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Dark Mode Toggle Demo -->
-      <div class="bg-card text-card-foreground rounded-lg border">
-        <div class="p-6 pb-0">
-          <h3 class="text-2xl font-semibold leading-none tracking-tight">Theme Toggle</h3>
-          <p class="text-sm text-muted-foreground mt-1.5">
-            Toggle between light and dark modes
-          </p>
+    <!-- Form Elements Demo -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-accent">Form Elements</h2>
+      <div class="max-w-md space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-2">Input Field</label>
+          <input 
+            type="text" 
+            placeholder="Enter text here..." 
+            class="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          />
         </div>
-        <div class="p-6 pt-0">
-          <button 
-            onclick="document.documentElement.classList.toggle('dark')"
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-          >
-            Toggle Dark Mode
-          </button>
+        <div>
+          <label class="block text-sm font-medium mb-2">Textarea</label>
+          <textarea 
+            placeholder="Enter your message..." 
+            rows="3"
+            class="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          ></textarea>
+        </div>
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" id="demo-checkbox" class="rounded border-border" />
+          <label for="demo-checkbox" class="text-sm">Checkbox option</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Swatches Demo -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-foreground">Color Swatches</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary rounded-lg mx-auto mb-2"></div>
+          <span class="text-sm font-medium">Primary</span>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-secondary rounded-lg mx-auto mb-2"></div>
+          <span class="text-sm font-medium">Secondary</span>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent rounded-lg mx-auto mb-2"></div>
+          <span class="text-sm font-medium">Accent</span>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-muted rounded-lg mx-auto mb-2"></div>
+          <span class="text-sm font-medium">Muted</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typography Demo -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-foreground">Typography</h2>
+      <div class="space-y-4">
+        <h1 class="text-4xl font-bold text-primary">Heading 1</h1>
+        <h2 class="text-3xl font-semibold text-secondary">Heading 2</h2>
+        <h3 class="text-2xl font-medium text-accent">Heading 3</h3>
+        <p class="text-lg text-foreground">
+          This is a paragraph with large text. It demonstrates the foreground color.
+        </p>
+        <p class="text-base text-muted-foreground">
+          This is regular text with muted foreground color for less important content.
+        </p>
+        <p class="text-sm text-muted-foreground">
+          Small text for captions and secondary information.
+        </p>
+      </div>
+    </div>
+
+    <!-- Status Indicators Demo -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-semibold mb-6 text-foreground">Status Indicators</h2>
+      <div class="flex flex-wrap gap-4">
+        <div class="flex items-center space-x-2 px-3 py-1 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-200 rounded-full">
+          <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+          <span class="text-sm">Success</span>
+        </div>
+        <div class="flex items-center space-x-2 px-3 py-1 bg-warning-light text-warning rounded-full">
+          <div class="w-2 h-2 bg-warning rounded-full"></div>
+          <span class="text-sm">Warning</span>
+        </div>
+        <div class="flex items-center space-x-2 px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-200 rounded-full">
+          <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+          <span class="text-sm">Error</span>
+        </div>
+        <div class="flex items-center space-x-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 rounded-full">
+          <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+          <span class="text-sm">Info</span>
         </div>
       </div>
     </div>

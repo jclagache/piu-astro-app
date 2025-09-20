@@ -27,6 +27,3 @@ pnpm-debug.log*
 # Cloudflare
 .dev.vars
 wrangler.toml.bak
-
-# Development pages (excluded from production builds)
-src/pages/dev/
