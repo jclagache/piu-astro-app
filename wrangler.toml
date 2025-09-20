@@ -11,8 +11,7 @@ compatibility_date = "2024-01-01"
 # PUBLIC_REOWN_PROJECT_ID = "your_reown_project_id"
 # PUBLIC_SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com"
 
-# KV namespace bindings (optional for session storage)
-# [[env.production.kv_namespaces]]
-# binding = "SESSION"
-# id = "your_kv_namespace_id"
-# preview_id = "your_preview_kv_namespace_id"
+# KV namespace bindings for session storage
+[[kv_namespaces]]
+binding = "SESSION"
+id = "fdefca3b7c3140bc8f7d58c642cb7617"

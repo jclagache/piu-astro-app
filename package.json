@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "build:cloudflare": "astro build",
+    "preview": "wrangler pages dev ./dist",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.8",
     "@astrojs/mdx": "^4.1.0",
     "@astrojs/react": "^4.2.1",
     "@radix-ui/react-label": "^2.1.7",

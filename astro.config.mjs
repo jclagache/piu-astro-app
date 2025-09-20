@@ -11,9 +11,14 @@ export default defineConfig({
     platformProxy: {
       enabled: true,
     },
+    imageService: 'compile', // Optimize images with sharp during build time
   }),
   vite: {
     plugins: [tailwindcss()]
   },
-  integrations: [react()]
+  integrations: [react()],
+  // Ensure proper module resolution
+  build: {
+    inlineStylesheets: 'auto'
+  }
 });

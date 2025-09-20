@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects
+# Redirect all development pages to home in production
+/dev/* / 404

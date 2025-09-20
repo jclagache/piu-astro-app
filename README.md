@@ -2,6 +2,83 @@
 
 A modern Web3 application built around the $PIU token deployed on the Solana blockchain. Connect your wallet, check your balance, and access exclusive features reserved for token holders.
 
+## 🚀 Deployment on Cloudflare Pages
+
+### Prerequisites for Cloudflare Pages
+
+1. **Node.js Version**: Ensure you're using Node.js 20+ (specified in `.nvmrc`)
+2. **Build Command**: Use `npm run build`
+3. **Build Output Directory**: `dist`
+4. **Root Directory**: Leave empty (uses project root)
+
+### Environment Variables
+
+Set these in your Cloudflare Pages dashboard:
+
+```env
+# Required for Reown AppKit
+PUBLIC_REOWN_PROJECT_ID=your_reown_project_id
+
+# Optional: Custom Solana RPC URL
+PUBLIC_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+```
+
+### Build Configuration
+
+The project is configured for Cloudflare Pages according to the [official Astro Cloudflare documentation](https://docs.astro.build/en/guides/integrations-guide/cloudflare/):
+
+- **SSR Mode**: `output: 'server'` in `astro.config.mjs`
+- **Cloudflare Adapter**: `@astrojs/cloudflare` for optimal performance
+- **Image Service**: `imageService: 'compile'` to optimize images with sharp during build time
+- **Platform Proxy**: `platformProxy.enabled: true` for development
+- **KV Sessions**: Configured with namespace `SESSION` for session storage
+- **Static Assets**: Automatically handled by Astro
+- **Security Headers**: Configured in `public/_headers`
+
+### KV Namespace Configuration
+
+The project uses Cloudflare KV for session storage. The namespace is already configured:
+
+```toml
+# wrangler.toml
+[[kv_namespaces]]
+binding = "SESSION"
+id = "fdefca3b7c3140bc8f7d58c642cb7617"
+```
+
+### Troubleshooting Deployment Issues
+
+If you encounter the error `Cannot find module '@astrojs/cloudflare'`:
+
+1. **Verify Dependencies**: Ensure `@astrojs/cloudflare` is in `package.json` ✅
+2. **Node.js Version**: Use Node.js 20+ (check `.nvmrc`) ✅
+3. **Build Command**: Use `npm run build` (not `npm run build:cloudflare`) ✅
+4. **Clear Cache**: Clear Cloudflare Pages build cache
+5. **Environment Variables**: Ensure all required env vars are set
+6. **KV Namespace**: Verify KV namespace is created and configured ✅
+
+### Manual Deployment Steps
+
+1. Connect your GitHub repository to Cloudflare Pages
+2. Set build command: `npm run build`
+3. Set build output directory: `dist`
+4. Add environment variables in the dashboard
+5. Deploy!
+
+### Local Preview with Wrangler
+
+For local testing with Cloudflare bindings and environment variables:
+
+```bash
+# Build the project first
+npm run build
+
+# Preview with Wrangler (includes Cloudflare features)
+npm run preview
+```
+
+This uses `wrangler pages dev ./dist` as recommended in the [official documentation](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#preview-with-wrangler).
+
 ## 🚀 Features
 
 - **Wallet Connection**: Seamless integration with Solana wallets (Phantom, Solflare)
