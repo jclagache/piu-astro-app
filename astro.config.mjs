@@ -5,20 +5,9 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',  // Keep static mode
+  output: 'static',
   vite: {
-    plugins: [tailwindcss()],
-    define: {
-      global: 'globalThis',
-    },
-    resolve: {
-      alias: {
-        buffer: 'buffer',
-      },
-    },
-    optimizeDeps: {
-      include: ['buffer', '@solana/web3.js'],
-    },
+    plugins: [tailwindcss()]
   },
   integrations: [react()],
   build: {

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js'
+import { SOLANA_RPC_URL } from '@/lib/constants'
 import { isValidSolanaAddress } from '@/utils/solana'
-import { getSolanaConnection } from '@/utils/rpc'
 
 export function useSolanaBalance(address: string | undefined) {
   const [balance, setBalance] = useState<number | null>(null)
@@ -20,27 +19,31 @@ export function useSolanaBalance(address: string | undefined) {
       setError(null)
 
       try {
-
-        // Validate address format
         if (!isValidSolanaAddress(address)) {
           throw new Error(`Invalid Solana address format: ${address}`)
         }
 
-        // Create connection to Solana with fallback
-        const connection = await getSolanaConnection()
-        
-        // Create public key from address string
-        const publicKey = new PublicKey(address!)
-        if (!publicKey) {
-          throw new Error(`Failed to create PublicKey from address: ${address}`)
+        const response = await fetch(SOLANA_RPC_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: 1,
+            method: 'getBalance',
+            params: [address],
+          }),
+        })
+
+        const data = await response.json()
+
+        if (data.error) {
+          throw new Error(data.error.message)
         }
-        
-        // Get balance in lamports
-        const balanceInLamports = await connection.getBalance(publicKey)
-        
-        // Convert to SOL (1 SOL = 1e9 lamports)
-        const balanceInSol = balanceInLamports / LAMPORTS_PER_SOL
-        
+
+        const balanceInLamports = data.result.value
+        const balanceInSol = balanceInLamports / 1000000000 // 1 SOL = 1e9 lamports
         setBalance(balanceInSol)
       } catch (err) {
         console.error('Error fetching balance:', err)
@@ -52,10 +55,7 @@ export function useSolanaBalance(address: string | undefined) {
     }
 
     fetchBalance()
-    
-    // Optional: Set up interval to refresh balance periodically
-    const interval = setInterval(fetchBalance, 30000) // Refresh every 30 seconds
-    
+    const interval = setInterval(fetchBalance, 30000)
     return () => clearInterval(interval)
   }, [address])
 
