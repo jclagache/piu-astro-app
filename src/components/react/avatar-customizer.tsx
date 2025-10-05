@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from "@/components/ui/label"
 import { GiCharacter } from "react-icons/gi";
 import { PiSelectionBackgroundBold } from "react-icons/pi";
+import { MdColorize } from "react-icons/md";
 
 interface AvatarCustomizerProps {
   baseImageSrc: string
@@ -12,45 +13,45 @@ interface AvatarCustomizerProps {
 }
 
 export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomizerProps) {
+  // Character color presets - 11 colors including original
+  const characterColorPresets = [
+    { name: 'Original', color: '#4d6a8e', value: 'original' },
+    { name: 'Red', color: '#dc2626', value: '#dc2626' },
+    { name: 'Orange', color: '#ea580c', value: '#ea580c' },
+    { name: 'Yellow', color: '#ca8a04', value: '#ca8a04' },
+    { name: 'Green', color: '#16a34a', value: '#16a34a' },
+    { name: 'Cyan', color: '#0891b2', value: '#0891b2' },
+    { name: 'Blue', color: '#2563eb', value: '#2563eb' },
+    { name: 'Purple', color: '#9333ea', value: '#9333ea' },
+    { name: 'Pink', color: '#db2777', value: '#db2777' },
+    { name: 'Brown', color: '#92400e', value: '#92400e' },
+    { name: 'Gray', color: '#4b5563', value: '#4b5563' }
+  ]
+
+  // Background color presets - 11 colors including original
+  const backgroundColorPresets = [
+    { name: 'Original', color: 'transparent', value: 'original' },
+    { name: 'White', color: '#ffffff', value: '#ffffff' },
+    { name: 'Cream', color: '#fef7ed', value: '#fef7ed' },
+    { name: 'Sky', color: '#7dd3fc', value: '#7dd3fc' },
+    { name: 'Mint', color: '#6ee7b7', value: '#6ee7b7' },
+    { name: 'Lavender', color: '#c4b5fd', value: '#c4b5fd' },
+    { name: 'Rose', color: '#fda4af', value: '#fda4af' },
+    { name: 'Peach', color: '#fdba74', value: '#fdba74' },
+    { name: 'Slate', color: '#94a3b8', value: '#94a3b8' },
+    { name: 'Navy', color: '#1e293b', value: '#1e293b' },
+    { name: 'Black', color: '#000000', value: '#000000' }
+  ]
+
   const [selectedCharacterColor, setSelectedCharacterColor] = useState('original')
-  const [backgroundColor, setBackgroundColor] = useState('#f0f0f0')
+  const [backgroundColor, setBackgroundColor] = useState(backgroundColorPresets.find(p => p.name === 'Original')?.value || 'original')
+  const [contrastLevel, setContrastLevel] = useState(1.0) // Range factor pour les variations de couleur (1.0 = similar to original)
   const svgRef = useRef<HTMLDivElement>(null)
   const [svgContent, setSvgContent] = useState('')
 
-  // Character color presets optimized for CSS filter transformations
-  const characterColorPresets = [
-    { name: 'Original', color: '#4d6a8e', value: 'original' }, // Show original blue tone
-    { name: 'Red', color: '#fb2323', value: '#fb2323' }, // PIU Red - vibrant and bold
-    { name: 'Blue', color: '#5488f8', value: '#5488f8' }, // PIU Blue - bright and energetic
-    { name: 'Brown', color: '#a0755a', value: '#a0755a' }, // PIU Brown - warm earth tone
-    { name: 'Green', color: '#16a34a', value: '#16a34a' },
-    { name: 'Purple', color: '#9333ea', value: '#9333ea' },
-    { name: 'Orange', color: '#ea580c', value: '#ea580c' },
-    { name: 'Pink', color: '#ec4899', value: '#ec4899' },
-    { name: 'Yellow', color: '#eab308', value: '#eab308' },
-    { name: 'Cyan', color: '#06b6d4', value: '#06b6d4' },
-    { name: 'Dark', color: '#374151', value: '#374151' },
-    { name: 'Light', color: '#d1d5db', value: '#d1d5db' }
-  ]
-
-  // Background color presets for avatar backgrounds
-  const backgroundColorPresets = [
-    { name: 'Transparent', color: 'transparent', value: 'transparent' },
-    { name: 'White', color: '#ffffff', value: '#ffffff' },
-    { name: 'Light Gray', color: '#d0d0d0', value: '#d0d0d0' },
-    { name: 'Dark Gray', color: '#374151', value: '#374151' },
-    { name: 'Black', color: '#000000', value: '#000000' },
-    { name: 'Yellow', color: '#f0d53d', value: '#f0d53d' },
-    { name: 'Original', color: '#0b5575', value: '#0b5575' },
-    { name: 'Accent', color: '#f40658', value: '#f40658' },
-    { name: 'Light Blue', color: '#74ccf2', value: '#74ccf2' },
-    { name: 'Pink', color: '#fc97ba', value: '#fc97ba' },
-    { name: 'Cream', color: '#fef7ed', value: '#fef7ed' },
-    { name: 'Navy', color: '#1e293b', value: '#1e293b' },
-  ]
-
   const handleCharacterColorChange = (value: string) => {
     setSelectedCharacterColor(value)
+    setContrastLevel(1.0) // Reset to default contrast level
     onColorChange?.(0, backgroundColor)
   }
 
@@ -60,9 +61,10 @@ export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomiz
   }
 
   const resetToDefault = () => {
+    const defaultBackgroundColor = backgroundColorPresets.find(p => p.name === 'Original')?.value || 'original'
     setSelectedCharacterColor('original')
-    setBackgroundColor('#f0f0f0')
-    onColorChange?.(0, '#f0f0f0')
+    setBackgroundColor(defaultBackgroundColor)
+    onColorChange?.(0, defaultBackgroundColor)
   }
 
   // Download the current avatar as PNG
@@ -105,8 +107,8 @@ export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomiz
       svgClone.setAttribute('height', size.toString())
       svgClone.setAttribute('viewBox', svgViewBox.join(' '))
       
-      // Add background color rectangle if not transparent
-      if (backgroundColor !== 'transparent') {
+      // Add background color rectangle if not original or transparent
+      if (backgroundColor !== 'original' && backgroundColor !== 'transparent') {
         const backgroundRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
         backgroundRect.setAttribute('x', '0')
         backgroundRect.setAttribute('y', '0')
@@ -127,8 +129,8 @@ export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomiz
       
       img.onload = () => {
         try {
-          // Set background if not transparent
-          if (backgroundColor !== 'transparent') {
+          // Set background if not original or transparent
+          if (backgroundColor !== 'original' && backgroundColor !== 'transparent') {
             ctx.fillStyle = backgroundColor
             ctx.fillRect(0, 0, size, size)
           }
@@ -209,116 +211,117 @@ export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomiz
     return true
   }
 
-  // Create color variations based on original element brightness and selected color characteristics
+  // Convert RGB to HSL
+  const rgbToHsl = (r: number, g: number, b: number): [number, number, number] => {
+    r /= 255
+    g /= 255
+    b /= 255
+
+    const max = Math.max(r, g, b)
+    const min = Math.min(r, g, b)
+    let h = 0, s = 0
+    const l = (max + min) / 2
+
+    if (max !== min) {
+      const d = max - min
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
+        case g: h = ((b - r) / d + 2) / 6; break
+        case b: h = ((r - g) / d + 4) / 6; break
+      }
+    }
+
+    return [h * 360, s * 100, l * 100]
+  }
+
+  // Convert HSL to RGB
+  const hslToRgb = (h: number, s: number, l: number): [number, number, number] => {
+    h /= 360
+    s /= 100
+    l /= 100
+
+    let r, g, b
+
+    if (s === 0) {
+      r = g = b = l
+    } else {
+      const hue2rgb = (p: number, q: number, t: number) => {
+        if (t < 0) t += 1
+        if (t > 1) t -= 1
+        if (t < 1/6) return p + (q - p) * 6 * t
+        if (t < 1/2) return q
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6
+        return p
+      }
+
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s
+      const p = 2 * l - q
+
+      r = hue2rgb(p, q, h + 1/3)
+      g = hue2rgb(p, q, h)
+      b = hue2rgb(p, q, h - 1/3)
+    }
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)]
+  }
+
+  // Create color variations by preserving HSL relationships from original
   const createColorVariation = (baseColor: string, element: Element): string => {
-    const computedColor = window.getComputedStyle(element).fill
-    
-    if (computedColor && computedColor.startsWith('rgb')) {
-      const matches = computedColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/)
+    // Use the stored original color instead of the current computed color
+    const originalColor = element.getAttribute('data-original-fill') || window.getComputedStyle(element).fill
+
+    if (originalColor && originalColor.startsWith('rgb')) {
+      const matches = originalColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/)
       if (matches) {
-        const [, r, g, b] = matches.map(Number)
-        const originalBrightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255
-        
-        // Special handling for pure black zones (RGB = 0,0,0)
-        if (r === 0 && g === 0 && b === 0) {
-          // For pure black, use a darker version of the selected color
-          const baseR = parseInt(baseColor.slice(1, 3), 16)
-          const baseG = parseInt(baseColor.slice(3, 5), 16)
-          const baseB = parseInt(baseColor.slice(5, 7), 16)
-          
-          // Create a darker version (30% of the selected color)
-          const darkFactor = 0.3
-          const newR = Math.round(baseR * darkFactor)
-          const newG = Math.round(baseG * darkFactor)
-          const newB = Math.round(baseB * darkFactor)
-          
-          return `rgb(${newR}, ${newG}, ${newB})`
-        }
-        
+        const [, origR, origG, origB] = matches.map(Number)
+
         // Parse base color
         const baseR = parseInt(baseColor.slice(1, 3), 16)
         const baseG = parseInt(baseColor.slice(3, 5), 16)
         const baseB = parseInt(baseColor.slice(5, 7), 16)
-        
-        // Analyze selected color characteristics
-        const selectedBrightness = (baseR * 0.299 + baseG * 0.587 + baseB * 0.114) / 255
-        const selectedSaturation = Math.max(baseR, baseG, baseB) - Math.min(baseR, baseG, baseB)
-        
-        // Adapt factor based on selected color properties
-        let baseFactor = 0.2
-        let rangeFactor = 1.3
-        
-        // Special handling for specific colors from our presets
-        const colorLower = baseColor.toLowerCase()
-        
-        // Yellow/orange colors: need wide range to maintain visibility
-        if (colorLower === '#ffff00' || colorLower === '#ffa500' || selectedBrightness > 0.8) {
-          baseFactor = 0.1 // Allow very dark variations
-          rangeFactor = 1.8 // Very wide range
-        }
-        // PIU Red (#fb2323): vibrant red with good contrast range
-        else if (colorLower === '#fb2323') {
-          baseFactor = 0.2 // Allow darker reds
-          rangeFactor = 1.6 // Wide range for natural variations
-        }
-        // PIU Blue (#5488f8): bright blue with good dark variation potential
-        else if (colorLower === '#5488f8') {
-          baseFactor = 0.15 // Allow very dark blues
-          rangeFactor = 1.7 // Very wide range for depth
-        }
-        // PIU Brown (#a0755a): earthy tone needs balanced approach
-        else if (colorLower === '#a0755a') {
-          baseFactor = 0.3 // Moderate dark limit for browns
-          rangeFactor = 1.4 // Good range for natural wood/earth tones
-        }
-        // Generic red colors: good natural contrast
-        else if (colorLower === '#ff0000' || (baseR > 200 && baseG < 100 && baseB < 100)) {
-          baseFactor = 0.25
-          rangeFactor = 1.4
-        }
-        // Generic blue colors: can handle darker variations well
-        else if (colorLower === '#0000ff' || (baseB > 200 && baseR < 100 && baseG < 100)) {
-          baseFactor = 0.2
-          rangeFactor = 1.5
-        }
-        // Green colors: balanced approach
-        else if (colorLower === '#00ff00' || (baseG > 200 && baseR < 100 && baseB < 100)) {
-          baseFactor = 0.25
-          rangeFactor = 1.3
-        }
-        // Purple/magenta colors: moderate range
-        else if (colorLower === '#ff00ff' || (baseR > 150 && baseB > 150 && baseG < 100)) {
-          baseFactor = 0.3
-          rangeFactor = 1.2
-        }
-        // Very dark colors: ensure good visibility
-        else if (selectedBrightness < 0.3) {
-          baseFactor = 0.6 // Ensure better visibility for dark colors
-          rangeFactor = 1.2 // Good range for dark colors
-        }
-        // For saturated colors: moderate range
-        else if (selectedSaturation > 150) {
-          baseFactor = 0.3
-          rangeFactor = 1.2
-        }
-        // For neutral colors (grays): standard range
-        else {
-          baseFactor = 0.2
-          rangeFactor = 1.3
-        }
-        
-        // Create adaptive factor based on original brightness and selected color
-        const factor = baseFactor + originalBrightness * rangeFactor
-        
-        const newR = Math.max(0, Math.min(255, Math.round(baseR * factor)))
-        const newG = Math.max(0, Math.min(255, Math.round(baseG * factor)))
-        const newB = Math.max(0, Math.min(255, Math.round(baseB * factor)))
-        
-        
+
+        // Convert to HSL
+        const [origH, origS, origL] = rgbToHsl(origR, origG, origB)
+        const [baseH, baseS, baseL] = rgbToHsl(baseR, baseG, baseB)
+
+        // Calculate the lightness ratio relative to the original base color #4d6a8e
+        // This preserves the relationship between different shades
+        const originalBaseL = 42.5 // Lightness of #4d6a8e
+
+        // Calculate the offset from the original base (how much lighter or darker)
+        const lightnessOffset = origL - originalBaseL
+
+        // Apply this offset to the new base color
+        const targetL = baseL + lightnessOffset
+
+        // Apply contrast adjustment
+        // When contrastLevel = 1.0, use full offset
+        // When contrastLevel < 1.0, reduce the offset (move towards baseL)
+        // When contrastLevel > 1.0, increase the offset (move away from baseL)
+        const adjustedOffset = lightnessOffset * contrastLevel
+        let newL = baseL + adjustedOffset
+
+        // Clamp lightness
+        newL = Math.max(5, Math.min(95, newL))
+
+        // Preserve saturation variation from original more subtly
+        // Map original saturation range to new saturation range
+        const baseSaturationOffset = origS - 50 // Offset from middle saturation
+        let newS = baseS + (baseSaturationOffset * 0.3) // Apply offset proportionally
+        newS = Math.max(0, Math.min(100, newS))
+
+        // Use the hue of the selected color
+        const newH = baseH
+
+        // Convert back to RGB
+        const [newR, newG, newB] = hslToRgb(newH, newS, newL)
+
         return `rgb(${newR}, ${newG}, ${newB})`
       }
     }
-    
+
     // Fallback to base color
     return baseColor
   }
@@ -344,85 +347,109 @@ export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomiz
     }
   }, [baseImageSrc])
 
-  // Apply direct color changes to SVG fill attributes - much more accurate than CSS filters
-  const applyDirectColors = useCallback(() => {
+  // Inject SVG content only once on initial load
+  useEffect(() => {
     if (!svgRef.current || !svgContent) return
 
     // Inject SVG content
     svgRef.current.innerHTML = svgContent
 
-    // Wait for DOM to be ready
-    setTimeout(() => {
-      const headGroup = svgRef.current?.querySelector('#Head')
-      if (!headGroup) {
-        console.warn('Head group not found in SVG')
-        return
-      }
+    // Add smooth transition to all SVG elements
+    const svg = svgRef.current.querySelector('svg')
+    if (svg) {
+      const style = document.createElement('style')
+      style.textContent = `
+        #Head path,
+        #Head circle,
+        #Head rect,
+        #Head polygon {
+          transition: fill 0.2s ease-in-out;
+        }
+      `
+      svg.appendChild(style)
+    }
 
+    // Store original colors in data attributes
+    const headGroup = svgRef.current.querySelector('#Head')
+    if (headGroup) {
+      const allElements = [
+        ...headGroup.querySelectorAll('path'),
+        ...headGroup.querySelectorAll('circle'),
+        ...headGroup.querySelectorAll('rect'),
+        ...headGroup.querySelectorAll('polygon')
+      ]
 
-      // Find all shape elements in the Head group
-      const pathElements = headGroup.querySelectorAll('path')
-      const circleElements = headGroup.querySelectorAll('circle')
-      const rectElements = headGroup.querySelectorAll('rect')
-      const polygonElements = headGroup.querySelectorAll('polygon')
-      
-      // Now all elements with CSS classes (cls-1, cls-2, etc.) are part of the character
-      // The background is transparent in the new SVG structure
-      const allElements = [...pathElements, ...circleElements, ...rectElements, ...polygonElements]
-      const elementsWithClasses = allElements.filter(el => {
-        const classList = el.getAttribute('class')
-        return classList && classList.match(/cls-\d+/)
-      })
-      const elementsWithoutClasses = allElements.filter(el => {
-        const classList = el.getAttribute('class')
-        return !classList || !classList.match(/cls-\d+/)
-      })
-
-      // Apply exact color to main character zones while preserving detail zones
-      allElements.forEach((element, index) => {
-        const currentClass = element.getAttribute('class')
-        const currentFill = element.getAttribute('fill')
-        
-        if (selectedCharacterColor === 'original') {
-          // Restore original colors
-          ;(element as unknown as HTMLElement).style.removeProperty('fill')
-          element.removeAttribute('fill')
-        } else {
-          // Determine if this element should be colorized based on its original color
-          const shouldColorize = isMainCharacterZone(element, currentClass, currentFill)
-          
-          if (shouldColorize) {
-            // Apply selected color with slight variations based on original brightness
-            const variedColor = createColorVariation(selectedCharacterColor, element)
-            ;(element as unknown as HTMLElement).style.fill = variedColor
-            element.setAttribute('fill', variedColor)
-          } else {
-            // Keep detail zones in their original colors
-            ;(element as unknown as HTMLElement).style.removeProperty('fill')
-            element.removeAttribute('fill')
-          }
+      allElements.forEach((element) => {
+        const computedColor = window.getComputedStyle(element).fill
+        if (computedColor && computedColor.startsWith('rgb')) {
+          // Store the original color as a data attribute
+          element.setAttribute('data-original-fill', computedColor)
         }
       })
+    }
 
-    }, 100)
-  }, [svgContent, selectedCharacterColor, backgroundColor])
+    // Apply initial colors after a small delay to ensure DOM is ready
+    setTimeout(() => {
+      updateColors()
+    }, 0)
+  }, [svgContent])
 
-  // Apply colors when SVG content changes
+  // Update colors without re-injecting SVG
+  const updateColors = useCallback(() => {
+    if (!svgRef.current) return
+
+    const headGroup = svgRef.current.querySelector('#Head')
+    if (!headGroup) {
+      console.warn('Head group not found in SVG')
+      return
+    }
+
+    // Find all shape elements in the Head group
+    const pathElements = headGroup.querySelectorAll('path')
+    const circleElements = headGroup.querySelectorAll('circle')
+    const rectElements = headGroup.querySelectorAll('rect')
+    const polygonElements = headGroup.querySelectorAll('polygon')
+
+    const allElements = [...pathElements, ...circleElements, ...rectElements, ...polygonElements]
+
+    // Apply exact color to main character zones while preserving detail zones
+    allElements.forEach((element) => {
+      const currentClass = element.getAttribute('class')
+      const currentFill = element.getAttribute('fill')
+
+      if (selectedCharacterColor === 'original') {
+        // Restore original colors
+        ;(element as unknown as HTMLElement).style.removeProperty('fill')
+        element.removeAttribute('fill')
+      } else {
+        // Determine if this element should be colorized based on its original color
+        const shouldColorize = isMainCharacterZone(element, currentClass, currentFill)
+
+        if (shouldColorize) {
+          // Apply selected color with slight variations based on original brightness
+          const variedColor = createColorVariation(selectedCharacterColor, element)
+          ;(element as unknown as HTMLElement).style.fill = variedColor
+          element.setAttribute('fill', variedColor)
+        } else {
+          // Keep detail zones in their original colors
+          ;(element as unknown as HTMLElement).style.removeProperty('fill')
+          element.removeAttribute('fill')
+        }
+      }
+    })
+  }, [selectedCharacterColor, contrastLevel])
+
+  // Apply colors when character color or contrast level changes
   useEffect(() => {
     if (svgContent && svgRef.current) {
-      applyDirectColors()
+      updateColors()
     }
-  }, [svgContent, applyDirectColors])
-
-  // Apply colors when character color changes
-  useEffect(() => {
-    if (svgContent) {
-      applyDirectColors()
-    }
-  }, [selectedCharacterColor, applyDirectColors, svgContent])
+  }, [selectedCharacterColor, contrastLevel, updateColors, svgContent])
 
   const getCurrentColorDisplay = () => {
-    if (selectedCharacterColor === 'original') return '#8B4513'
+    if (selectedCharacterColor === 'original') {
+      return characterColorPresets.find(p => p.value === 'original')?.color || '#4d6a8e'
+    }
     return selectedCharacterColor
   }
 
@@ -442,9 +469,9 @@ export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomiz
       </div>
       
       <div className="flex justify-center mb-8">
-        <div 
+        <div
           className="transition-all duration-300 relative w-64 h-64"
-          style={{ backgroundColor: backgroundColor }}
+          style={{ backgroundColor: backgroundColor === 'original' ? 'transparent' : backgroundColor }}
         >
           {/* SVG with direct fill attribute modification */}
           <div 
@@ -472,39 +499,93 @@ export function AvatarCustomizer({ baseImageSrc, onColorChange }: AvatarCustomiz
         <div id= "character-color-presets" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-card border shadow-sm">
         <GiCharacter />
          {characterColorPresets.map((preset, index) => (
-             <div 
+             <div
              key={index}
              className={`w-5 h-5 rounded border shadow-sm cursor-pointer hover:scale-110 transition-transform ${
                selectedCharacterColor === preset.value ? 'border-primary border-2 ring-2 ring-primary/50' : 'border-border'
              }`}
-             style={{ backgroundColor: preset.color }} 
+             style={{
+               backgroundColor: preset.value === 'original' ? '#ffffff' : preset.color,
+               backgroundImage: preset.value === 'original'
+                 ? 'linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0), linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0)'
+                 : 'none',
+               backgroundSize: preset.value === 'original' ? '6px 6px' : 'auto',
+               backgroundPosition: preset.value === 'original' ? '0 0, 3px 3px' : 'initial'
+             }}
              onClick={() => handleCharacterColorChange(preset.value)}
              title={preset.name}
            />
          ))}
+         <label className="relative w-5 h-5 rounded border shadow-sm cursor-pointer hover:scale-110 transition-transform bg-gradient-to-br from-red-500 via-yellow-500 to-blue-500 flex items-center justify-center" title="Custom color">
+           <MdColorize className="text-white text-xs drop-shadow-md" />
+           <input
+             type="color"
+             value={selectedCharacterColor === 'original' ? '#4d6a8e' : selectedCharacterColor}
+             onChange={(e) => handleCharacterColorChange(e.target.value)}
+             className="absolute opacity-0 w-0 h-0"
+           />
+         </label>
         </div>
       </div>
+
+      {/* Contrast level slider */}
+      {selectedCharacterColor !== 'original' && (
+        <div className="text-center">
+          <div className="inline-flex flex-col gap-2 px-6 py-4 rounded-lg bg-card border shadow-sm max-w-md">
+            <Label htmlFor="contrast-slider" className="text-sm font-medium">
+              Contrast Level: {contrastLevel.toFixed(1)}
+            </Label>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-muted-foreground">Low</span>
+              <input
+                id="contrast-slider"
+                type="range"
+                min="0.5"
+                max="1.5"
+                step="0.1"
+                value={contrastLevel}
+                onChange={(e) => setContrastLevel(parseFloat(e.target.value))}
+                className="flex-1 h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+              />
+              <span className="text-xs text-muted-foreground">High</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Adjust to control shadows and highlights
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="text-center">
         <div id="background-color-presets" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-card border shadow-sm">
          <PiSelectionBackgroundBold />
          {backgroundColorPresets.map((preset, index) => (
-             <div 
+             <div
              key={index}
              className={`w-5 h-5 rounded border shadow-sm cursor-pointer hover:scale-110 transition-transform ${
                backgroundColor === preset.value ? 'border-primary border-2 ring-2 ring-primary/50' : 'border-border'
              }`}
-             style={{ 
-               backgroundColor: preset.value === 'transparent' ? '#ffffff' : preset.color,
-               backgroundImage: preset.value === 'transparent' 
+             style={{
+               backgroundColor: preset.value === 'original' || preset.value === 'transparent' ? '#ffffff' : preset.color,
+               backgroundImage: preset.value === 'original' || preset.value === 'transparent'
                  ? 'linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0), linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0)'
                  : 'none',
-               backgroundSize: preset.value === 'transparent' ? '6px 6px' : 'auto',
-               backgroundPosition: preset.value === 'transparent' ? '0 0, 3px 3px' : 'initial'
-             }} 
+               backgroundSize: preset.value === 'original' || preset.value === 'transparent' ? '6px 6px' : 'auto',
+               backgroundPosition: preset.value === 'original' || preset.value === 'transparent' ? '0 0, 3px 3px' : 'initial'
+             }}
              onClick={() => handleBackgroundColorChange(preset.value)}
              title={preset.name}
            />
          ))}
+         <label className="relative w-5 h-5 rounded border shadow-sm cursor-pointer hover:scale-110 transition-transform bg-gradient-to-br from-red-500 via-yellow-500 to-blue-500 flex items-center justify-center" title="Custom color">
+           <MdColorize className="text-white text-xs drop-shadow-md" />
+           <input
+             type="color"
+             value={backgroundColor === 'original' ? '#ffffff' : backgroundColor}
+             onChange={(e) => handleBackgroundColorChange(e.target.value)}
+             className="absolute opacity-0 w-0 h-0"
+           />
+         </label>
          </div>
       </div>
     </div>
